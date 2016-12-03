@@ -1,0 +1,3 @@
+This is a simple piece of code to run a Dallas DS1820 one wire temperature sensor on a Raspberry PI and
+output the temperature and sensor ID to a MySQL database
+  
