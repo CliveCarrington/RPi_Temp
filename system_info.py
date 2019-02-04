@@ -5,19 +5,23 @@ import subprocess
 import os
 import MySQLdb as mdb
 
+#### Import dB Details from access.py
+from access import hostname, username, password, dB, systemName
+
+
 # Function for storing readings into MySQL
 def insertDB(system_load, ram, disk, temperature):
 
   try:
-    con = mdb.connect('localhost',
-                      'pi_insert',
-                      'xxxxxxxxxx',
-                      'measurements');
+    con = mdb.connect(hostname,
+                      username,
+                      password,
+                      dB);
     cursor = con.cursor()
 
-    sql = "INSERT INTO system_info(`load`,`ram`,`disk`,`temperature`) \
-    VALUES ('%s', '%s', '%s', '%s')" % \
-    (system_load, ram, disk, temperature)
+    sql = "INSERT INTO system_info(`systemName`, `load`,`ram`,`disk`,`temperature`) \
+    VALUES ('%s', '%s', '%s', '%s', '%s')" % \
+    (systemName, system_load, ram, disk, temperature)
     cursor.execute(sql)
     con.commit()
 
@@ -50,7 +54,7 @@ def get_ram():
 # Returns the percentage used disk space on the /dev/root partition
 def get_disk():
     try:
-        s = subprocess.check_output(["df","/dev/root"])
+        s = subprocess.check_output(["df","/"])
         lines = s.split("\n")
         return int(lines[1].split("%")[0].split()[4])
     except:

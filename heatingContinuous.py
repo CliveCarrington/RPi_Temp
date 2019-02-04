@@ -34,6 +34,12 @@ ONE_SHOT  = 0x01
 CONT_MODE = 0xFE
 CLR_TL_TH = 0x9F
 
+
+##############################################
+#
+#  Heating Controls variables
+#
+##############################################
 logging.basicConfig(filename='/home/pi/DS1621_error.log',
   level=logging.DEBUG,
   format='%(asctime)s %(levelname)s %(name)s %(message)s')
