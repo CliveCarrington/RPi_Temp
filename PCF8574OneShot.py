@@ -14,7 +14,7 @@ from access import hostname, username, password, dB
 # PCF8574 commands
 PCF8574		= 0x20
 
-logging.basicConfig(filename='/home/pi/PCF8574_error.log',
+logging.basicConfig(filename='/home/pi/log/PCF8574_error.log',
   level=logging.DEBUG,
   format='%(asctime)s %(levelname)s %(name)s %(message)s')
 logger=logging.getLogger(__name__)
