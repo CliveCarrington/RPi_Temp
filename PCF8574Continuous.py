@@ -35,6 +35,7 @@ def read(address):
 	except IOError as io_err:
 		logger.error(io_err)
 		print(io_err)
+		return 0
 	return reading
 
 ################################################

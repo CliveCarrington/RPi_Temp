@@ -72,6 +72,7 @@ def insertDB(IDs, temperature):
       sql = "INSERT INTO temperature(temperature, sensor_id) \
       VALUES ('%s', '%s')" % \
       ( temperature[i], IDs[i])
+#      print sql
       cursor.execute(sql)
       sql = []
       con.commit()
