@@ -29,6 +29,8 @@ BIT_HW          = 0x08
 BIT_NOT_HW      = 0x10
 BIT_BOILER      = 0x20
 
+# Set values for entering the data into the database. Needed a mechanism to show a "Maybe", when value unknown
+
 ON      = 2
 OFF     = 0
 MAYBE   = 1
