@@ -39,5 +39,9 @@ echo
 echo "Current Crontab setting are:"
 crontab -l | grep "RPiMRE"
 echo
+echo "Now installing the MySQL python libraries"
+sudo apt-get install python-mysql.connector
+sudo apt-get install python-mysqldb 
+echo
 echo "Install finished"
 
