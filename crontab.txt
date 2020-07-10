@@ -1,0 +1,5 @@
+0,10,20,30,40,50 * * * * cd /home/pi/Software/RPiMRE; ./checkHeatingRunning.sh
+1,11,21,31,41,51 * * * * cd /home/pi/Software/RPiMRE; ./checkPCFRunning.sh
+2,12,22,32,42,52 * * * * cd /home/pi/Software/RPiMRE; ./checkPowerUsageRunning.sh
+*/5 * * * *  /usr/bin/python /home/pi/Software/RPiMRE/system_info.py
+
