@@ -53,18 +53,18 @@ write(PCF8574, 0xFF)
 
 try:
 	pins = read(PCF8574)
-	print "%02x" % pins
+	print ("%02x" % pins)
 #	print pins
 #		As the most significant two bits are unconnected,
 #		they should always be high. Hence, if the value of 
 #		the pins is less than 192 (C0) we need to reset.
 	if (pins < 0xC0):
-		print "Resetting to FF"
+		print ("Resetting to FF")
 		write(PCF8574, 0xFF)
 	else:
 		sendHeatingData(pins)
 except IOError as io_error:
 	print("bus Read error", io_error)
-	print "Clash"		
+	print( "Clash")
 
 

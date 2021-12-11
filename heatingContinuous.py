@@ -55,9 +55,9 @@ def twos_comp(byte):
     '''input byte in two's complement is returned as signed integer. '''
     if len(bin(byte)[2:]) > 8:
         # shouldn't ever get here
-        print '\nWarning: input ' + str(hex(byte)) + \
+        print ('\nWarning: input ' + str(hex(byte)) + \
               ' truncated to least significant byte: ' + \
-              str(hex(0xFF & byte))
+              str(hex(0xFF & byte)))
         byte = 0xFF & byte
     return ~(255 - byte) if byte > 127 else byte
 
@@ -83,7 +83,8 @@ def insertDB(IDs, temperature):
 
     con.close()
 
-  except mdb.Error, e:
+  except mdb.Error:
+    e = sys.exc_info()[0]
     logger.error(e)
 
 
@@ -110,8 +111,8 @@ def read_CHstatus(bus, sensor):
     try:
     	CHstatus = bus.read_byte(sensor)
     except IOError as io_err:
-	print(io_err)
-	return(0)
+        print(io_err)
+        return(0)
 	
     return CHstatus
 
@@ -139,16 +140,16 @@ IDs = ["HWT_Top", "HWT_Bottom"]
 
 bus = smbus.SMBus(1)
 # sensorname at bus address.
-print "Starting up continuous monitor"
+print ("Starting up continuous monitor")
 while True:
 	needToUpdate = False
 	for sensor in range(len(address)):
 		try:
 			wake_up(bus,address[sensor])
 			temp = read_degreesC_byte(bus, address[sensor])
-			#print address[sensor], temp
-			if temp != temperature[sensor]:
-				#print "Need to update dB. ", temp, temperature[sensor]
+			#print (address[sensor], temp)
+			if temp != 0 and temp != temperature[sensor]:
+				#print ("Need to update dB. ", temp, temperature[sensor])
 				needToUpdate = True
 				temperature[sensor] = temp
 		except IOError as io_err:
@@ -158,10 +159,10 @@ while True:
 	# Finished looking at each sensor. Now need to check whether we need to update the dB
 
 	if needToUpdate:
-		currentDT = datetime.datetime.now()
-                print "Continuous. ", str(currentDT), IDs, temperature
-		insertDB(IDs, temperature)
+                currentDT = datetime.datetime.now()
+                print ("Continuous. ", str(currentDT), IDs, temperature)
+                insertDB(IDs, temperature)
 	# Now check the CH system status:
 #	CH = read_CHstatus(bus, 0x20)
-#	print hex(CH)
+#	print (hex(CH))
 	time.sleep(5)

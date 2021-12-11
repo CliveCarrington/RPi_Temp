@@ -67,7 +67,7 @@ def main_CHroutine():
 	while inputChannel.isOpen() :
 		each_line = inputChannel.readline()
 		if each_line != "":
-			print each_line
+			print (each_line)
 			root = ET.fromstring(each_line)
 			sensor = -1
 			recordValid = False

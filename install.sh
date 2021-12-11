@@ -1,6 +1,6 @@
 #!/bin/sh
 
-DEST="../xRPiMRE"
+DEST="../RPiMRE"
 if [ ! -d $DEST ]
 	then
 		echo "Need to create dirctory"
@@ -39,9 +39,14 @@ echo
 echo "Current Crontab setting are:"
 crontab -l | grep "RPiMRE"
 echo
-echo "Now installing the MySQL python libraries"
-sudo apt-get install python-mysql.connector
-sudo apt-get install python-mysqldb 
-echo
+# Need to work out what libraries are used for python3.
+#echo "Now installing the MySQL python libraries"
+#sudo apt-get install python-mysql.connector
+sudo apt-get install python3-mysqldb 
+sudo apt-get install python3-smbus i2c-tools
+sudo apt-get install python3-serial
+
+
+#echo
 echo "Install finished"
 

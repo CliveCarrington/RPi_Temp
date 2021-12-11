@@ -54,55 +54,56 @@ def sendHeatingData(raw):
         sqlWATERSTATON  = MAYBE
         sqlCH           = MAYBE
 
-        print 'Assessing raw: %.2X' % raw
+        print ('Assessing raw: %.2X' % raw)
         if BOILER:              # Boiler on
-                print "Boiler on"
+                print ("Boiler on")
                 sqlBOILER = ON
         else:
                 sqlBOILER = OFF
 
         if NOT_CH:
-                print "CH off"
+                print ("CH off")
                 sqlCH = OFF
         else:
-                print "CH on"
+                print ("CH on")
                 sqlCH = ON
         if not HW:
-                print "HW off. Tank Stat off"
+                print ("HW off. Tank Stat off")
                 sqlHW = OFF
                 sqlWATERSTATON = ON
         else:
                 if NOT_HW:
-                        print "Tank stat warm, maybe want HW"
+                        print ("Tank stat warm, maybe want HW")
                         sqlWATERSTATON = OFF
                 else:
-                        print "HW on, tank stat cold"
+                        print ("HW on, tank stat cold")
                         sqlHW = ON
                         sqlWATERSTATON = ON
         if CH and ROOM:
-                print "Room stat cold"
+                print ("Room stat cold")
                 sqlROOMSTATON = ON
         if CH and not ROOM:
-                print "Room Stat hot"
+                print ("Room Stat hot")
                 sqlROOMSTATON = OFF
 
-        print "CH = ",sqlCH
-        print "HW = ",sqlHW
-        print "Room stat = ",sqlROOMSTATON
-        print "Tank Stat = ",sqlWATERSTATON
-        print "Boiler Status = ",sqlBOILER
+        print ("CH = ",sqlCH)
+        print ("HW = ",sqlHW)
+        print ("Room stat = ",sqlROOMSTATON)
+        print ("Tank Stat = ",sqlWATERSTATON)
+        print ("Boiler Status = ",sqlBOILER)
 
         try:
                 con = mdb.connect(hostname, username, password, dB)
                 cur = con.cursor()
-		cur.execute("""INSERT INTO centralHeating( rawReading, askForHeating, \
+                cur.execute("""INSERT INTO centralHeating( rawReading, askForHeating, \
 			askForHotWater, roomStatOn, tankStatOn, boilerOn ) \
 			VALUES(%s , %s, %s, %s, %s, %s )""", \
 			(raw, sqlCH, sqlHW, sqlROOMSTATON, sqlWATERSTATON, sqlBOILER))
                 con.commit()
-        except mdb.Error, e:
+        except mdb.Error:
+                e = sys.exc_info()[0]
                 #con.rollback()
-                print "Error %d: %s" % (e.args[0],e.args[1])
+                print ("Error %d: %s" % (e.args[0],e.args[1]))
                 #sys.exit(1)
   #	except:
   #  		print("Error in sendHeatingData")
@@ -115,12 +116,13 @@ def sendHeatingData_old (rawReading):
                 cur.execute("""INSERT INTO centralHeating(rawReading, roomTemperature)
                         VALUES(%s, %s )""", (rawReading, "20"))
                 con.commit()
-        except mdb.Error, e:
+        except mdb.Error:
+                e = sys.exc_info()[0]
                 #con.rollback()
-                print "Error %d: %s" % (e.args[0],e.args[1])
+                print ("Error %d: %s" % (e.args[0],e.args[1]))
                 #sys.exit(1)
-  	except:
-    		print("Error in sendHeatingData")
+        except:
+                print("Error in sendHeatingData")
 #	print(Hello)
 
 # Function for storing readings into MySQL
@@ -142,7 +144,8 @@ def sendTemperature(tempID, temperature):
 
     con.close()
 
-  except mdb.Error, e:
+  except mdb.Error:
+    e = sys.exc_info()[0]
     logger.error(e)
     print("Error in sendTemperature")
   except:
@@ -157,12 +160,13 @@ def sendPowerMeasurement(dtg, houseTotal, waterHeating, solarPower):
                         VALUES(%s, %s, %s )""", (houseTotal, waterHeating, solarPower))
                 con.commit()
 		#print("Sent ", houseTotal)
-        except mdb.Error, e:
+        except mdb.Error:
+                e = sys.exc_info()[0]
                 #con.rollback()
-                print "Error %d: %s" % (e.args[0],e.args[1])
+                print ("Error %d: %s" % (e.args[0],e.args[1]))
                 #sys.exit(1)
-	except:
-    		print("Error in sendPowerMeasurement")
+        except:
+                print("Error in sendPowerMeasurement")
 
 #def sendHeatingDataOld (recordDate, roomTemp, topTankTemp, bottomTankTemp, \
 #						askForHeating, askForHotWater, roomStatOn, tankStatOn, boilerOn, \

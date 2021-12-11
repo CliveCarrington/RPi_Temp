@@ -50,9 +50,9 @@ def twos_comp(byte):
     '''input byte in two's complement is returned as signed integer. '''
     if len(bin(byte)[2:]) > 8:
         # shouldn't ever get here
-        print '\nWarning: input ' + str(hex(byte)) + \
+        print ('\nWarning: input ' + str(hex(byte)) + \
               ' truncated to least significant byte: ' + \
-              str(hex(0xFF & byte))
+              str(hex(0xFF & byte)))
         byte = 0xFF & byte
     return ~(255 - byte) if byte > 127 else byte
 
@@ -79,7 +79,8 @@ def insertDB(IDs, temperature):
 
     con.close()
 
-  except mdb.Error, e:
+  except mdb.Error:
+    e = sys.exc_info()[0]
     logger.error(e)
 
 
@@ -127,9 +128,9 @@ bus = smbus.SMBus(1)
 for dev_addr in address:
 	wake_up(bus,dev_addr)
 	temp = read_degreesC_byte(bus, dev_addr)
-#	print dev_addr, temp
+#	print (dev_addr, temp)
 	temperature.append(temp)
 
 currentDT = datetime.datetime.now()
-print "OneShot: ", str(currentDT), IDs, temperature
+print ("OneShot: ", str(currentDT), IDs, temperature)
 insertDB(IDs, temperature)
