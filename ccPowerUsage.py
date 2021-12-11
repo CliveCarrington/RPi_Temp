@@ -3,12 +3,12 @@
 #	ccPowerUsage
 #
 #	Clive Carrington
-#	Version 0.1
-#	25th April 2020
+#	Version 1.1
+#	11th December 2021
 #
 #	History:
 #		0.1. Initial version, copied from ccDataReceiver
-
+#		1.1. Recoded to use Python3
 # Definitions
 
 logRoot = "log"
@@ -65,8 +65,12 @@ def main_CHroutine():
 
 				
 	while inputChannel.isOpen() :
-		each_line = inputChannel.readline()
+		print("Waiting for a line")
+		each_line_binary = inputChannel.readline()
+		each_line = each_line_binary.decode('uft-8')
+		print("Received a line, checking it")
 		if each_line != "":
+			print ("Received a line")
 			print (each_line)
 			root = ET.fromstring(each_line)
 			sensor = -1

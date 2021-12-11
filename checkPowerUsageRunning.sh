@@ -1,7 +1,7 @@
 #!/bin/bash
 
 checkFile="ccPowerUsage.py"
-logFile="~/log/powerUsage.txt"
+logFile="/home/pi/log/powerUsage.txt"
 
 #### Checks whether an application is running
 status=`/bin/ps -ef | grep $checkFile  | wc -l`
